@@ -1,12 +1,26 @@
-const numbers = document.querySelectorAll(".number");
-numbers.forEach(
-    (number) => {number.onclick = enterDigit;}
-);
+document.addEventListener("keydown", (event) => {
+    if (+event.key >= 0 && +event.key <= 9)  enterDigit(+event.key);
+    else switch (event.key) {
+        case "/": enterOperator("divide"); break;
+        case "*": enterOperator("multiply"); break;
+        case "-": enterOperator("subtract"); break;
+        case "+": enterOperator("add"); break;
+        case "=": enterEqual(); break;
+        case "c": clearAll(); break;
+    }
+});
 
-const operators = document.querySelectorAll(".operator");
-operators.forEach(
-    (operator) => {operator.onclick = enterOperator;}
-);
+document.querySelectorAll(".number").forEach((number) => {
+    number.onclick = () => {
+        enterDigit(+number.textContent);
+    };
+});
+
+document.querySelectorAll(".operator").forEach((operator) => {
+    operator.onclick = () => {
+        enterOperator(operator.id);
+    };
+});
 
 const equal = document.getElementById("equal");
 equal.onclick = enterEqual;
@@ -17,6 +31,8 @@ const clear = document.getElementById("clear");
 clear.onclick = clearAll;
 
 const result = document.getElementById("result");
+
+const expression = document.getElementById("expression");
 
 let skippedNum;
 let prevNum;
@@ -35,14 +51,13 @@ function operate (operator, a, b) {
     }
 }
 
-function enterDigit () {
-    newNum = newNum * 10 + +this.textContent;
+function enterDigit (digit) {
+    newNum = newNum * 10 + digit;
     result.textContent = newNum;
     justPressedEqual = false;
 }
 
-function enterOperator () {
-    newOp = this.id;
+function enterOperator (newOp) {
     if (!justPressedEqual) {
         if (type(prevOp) == 1 && type(newOp) == 2) { // a + b *
             //save a and + for later
@@ -50,10 +65,10 @@ function enterOperator () {
             skippedNum = prevNum;
             prevNum = newNum;
         }
-        // a + b +   OR   a * b +   OR   a * b *   OR   a + b =   OR   a * b =
-        else if (prevOp) prevNum = operate(prevOp, prevNum, newNum);
+        // a + b +   OR   a * b +   OR   a * b *
+        else if (prevOp)  prevNum = operate(prevOp, prevNum, newNum);
         // first operator, don't do anything
-        else prevNum = newNum;
+        else  prevNum = newNum;
 
         if (skippedOp && type(prevOp) == 2 && type(newOp) == 1) { // c + a * b +   =>   c + ab +
             prevNum = operate(skippedOp, skippedNum, prevNum); // (c+ab) +
@@ -70,7 +85,7 @@ type = operator => (operator == "multiply" || operator == "divide") ? 2 : 1;
 
 function enterEqual () {
     prevNum = operate(prevOp, prevNum, newNum);
-    if (skippedOp) prevNum = operate(skippedOp, skippedNum, prevNum);
+    if (skippedOp)  prevNum = operate(skippedOp, skippedNum, prevNum);
     result.textContent = prevNum;
     skippedOp = skippedNum = prevOp = newOp = newNum = 0;
     justPressedEqual = true;

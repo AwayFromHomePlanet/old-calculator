@@ -1,5 +1,43 @@
-button {
+body {
+    font-family: "Helvetica", sans-serif;
+}
+
+main {
+    width: 60vw;
+    margin: auto;
+    padding: 20px;
+    background-color: grey;
+}
+
+#screen {
+    margin-bottom: 10px;
+    padding: 20px;
+    text-align: right;
+    background-color: lightblue;
+}
+
+#result {
     font-size: 20px;
+}
+
+#buttons {
+    width: 100%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-gap: 5px;
+
+}
+
+button {
+    margin: 0;
+    padding: 10px;
+    font-size: 20px;
+}
+
+#on {
+    grid-column: 4 / 6;
 }
 
 .invisible {
