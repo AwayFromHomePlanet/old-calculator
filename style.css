@@ -1,23 +1,24 @@
-body {
+html {
     font-family: "Helvetica", sans-serif;
+    font-size: 20px;
 }
 
 main {
     width: 60vw;
     margin: auto;
-    padding: 20px;
+    padding: 1rem;
     background-color: grey;
 }
 
 #screen {
-    margin-bottom: 10px;
-    padding: 20px;
+    margin-bottom: 1rem;
+    padding: 1rem;
     text-align: right;
     background-color: lightblue;
 }
 
 #result {
-    font-size: 20px;
+    font-size: 1.5rem;
 }
 
 #buttons {
@@ -26,14 +27,14 @@ main {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(4, 1fr);
-    grid-gap: 5px;
+    grid-gap: 0.5rem;
 
 }
 
 button {
     margin: 0;
-    padding: 10px;
-    font-size: 20px;
+    padding: 1rem;
+    font-size: 1rem;
 }
 
 #on {
